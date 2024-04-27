@@ -1,0 +1,47 @@
+<!-- home.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body>
+    {% include 'university/header.html' %}
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+<h1>Welcome to the University Portal</h1>
+    <p>To test the Create Assignment page, follow these steps:</p>
+    <ol>
+        <li>Login as a professor.(for example username: remuslupin password:password)</li>
+        <li>Go to the Create Assignment page.</li>
+        <li>Fill in the form with the course, title, description, and deadline for the assignment.</li>
+        <li>Click the 'Create' button to submit the form.</li>
+        <li>If the form is valid, you will be redirected to the Assignments page where you can see the newly created assignment.</li>
+        <li>If the form is not valid, you will stay on the Create Assignment page and see error messages for the fields that need to be corrected.</li>
+    </ol>
+        <p>To test how to add subject to students:</p>
+    <ol>
+        <li>Login as a super user(username: Tsarevich password: antoinette)</li>
+        <li>Go to the taking subject page.</li>
+        <li>choose student course and semester.</li>
+        <li>Click the 'Submit' button to submit the form.</li>
+        <li>here you can see students with their subjects</li>
+    </ol>
+        <p>To test student features:</p>
+    <ol>
+        <li>Login as a student(username: lunalovegood password: password)</li>
+
+    </ol>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+
+{% block content %}
+    {% include 'university/header.html' %}
+    <h1>Your Courses</h1>
+    {% for course_data in courses_with_students %}
+        <h2>{{ course_data.course.name }}</h2>
+        <ul>
+            {% for student in course_data.students %}
+                <li>{{ student.student.first_name }} {{ student.student.last_name }}</li>
+            {% empty %}
+                <li>No students taking this course</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endblock %}

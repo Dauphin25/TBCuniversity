@@ -1,0 +1,15 @@
+{% block content %}
+    {% include 'university/header.html' %}
+    <h2>My Subjects</h2>
+    <h3>{{ student.first_name }} {{ student.last_name }}</h3>
+    <ul>
+        {% for taking_subject in my_subjects %}
+            <li>{{ taking_subject.course.name }}
+                (Professor: {{ taking_subject.course.professor.first_name }}
+                {{ taking_subject.course.professor.last_name }}
+                | Credits: {{ taking_subject.course.number_of_credits }})</li>
+        {% empty %}
+            <li>No subjects chosen yet.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

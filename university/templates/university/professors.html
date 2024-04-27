@@ -1,0 +1,29 @@
+{% block content %}
+    {% include 'university/header.html' %}
+    <div class="container">
+        <h2>All Professors</h2>
+        <div class="professors-list">
+            {% for professor in professors %}
+                <div class="professor">
+                    <h3>{{ professor.first_name }} {{ professor.last_name }}</h3>
+                    <p>Email: {{ professor.email }}</p>
+                    <p>Faculty: {{ professor.faculty }}</p>
+                    <!-- Add more professor information here as needed -->
+                </div>
+            {% endfor %}
+            {% if professors.has_previous %}
+                <a href="?page=1">&laquo; First</a>
+                <a href="?page={{ professors.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            <span class="current">
+    Page {{ professors.number }} of {{ professors.paginator.num_pages }}.
+  </span>
+
+            {% if professors.has_next %}
+                <a href="?page={{ professors.next_page_number }}">Next</a>
+                <a href="?page={{ professors.paginator.num_pages }}">Last &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% block content %}
+    {% include 'university/header.html' %}
+    <div class="container">
+        <h2>All Faculties</h2>
+        <div class="faculties-list">
+            {% for faculty in faculties %}
+                <div class="faculty">
+                    <h3>{{ faculty.name }}</h3>
+                    <p>{{ faculty.description }}</p>
+                    <p> {{ faculty.email }}</p>
+                    <p>Head Professor: {{ faculty.head_of_faculty }}</p>
+                    <!-- Add more faculty information here as needed -->
+                </div>
+            {% endfor %}
+        </div>
+        {% if faculties.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ faculties.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+    Page {{ faculties.number }} of {{ faculties.paginator.num_pages }}.
+  </span>
+
+        {% if faculties.has_next %}
+            <a href="?page={{ faculties.next_page_number }}">Next</a>
+            <a href="?page={{ faculties.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+
+    </div>
+{% endblock %}
+
+

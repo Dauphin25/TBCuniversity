@@ -1,0 +1,18 @@
+{% include 'university/header.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>All Subjects</h2>
+    <div class="subjects-list">
+        {% for course in courses %}
+            <div class="subject">
+                <h3>{{ course.name }}</h3>
+                <p>Description: {{ course.description }}</p>
+                <p>Professor: {{ course.professor }}</p>
+                <p>Credits -> {{ course.number_of_credits }}</p>
+                <!-- Add more subject information here as needed -->
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

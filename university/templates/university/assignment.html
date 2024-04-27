@@ -1,0 +1,14 @@
+
+{% block content %}
+    {% include 'university/header.html' %}
+    {% if assignments %}
+        <p>Assignments are available:</p>
+        <ul>
+            {% for assignment in assignments %}
+                <li>{{ assignment.title }} - {{ assignment.description }} - {{ assignment.deadline }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No assignments found.</p>
+    {% endif %}
+{% endblock %}

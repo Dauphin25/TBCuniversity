@@ -1,0 +1,34 @@
+<!-- taking_subjects.html -->
+
+{% block content %}
+
+    {% include 'university/header.html' %}
+
+  <!-- Form to choose subjects for students -->
+  <h2>Choose Subjects for Students</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+
+  <!-- Display error message if a student tries to exceed the maximum number of subjects -->
+  {% if error_message %}
+    <p style="color: red;">{{ error_message }}</p>
+  {% endif %}
+
+  <hr>
+
+  <!-- Display current subjects for each student -->
+  <h2>Current Subjects</h2>
+  {% for student, subjects in taking_subjects_grouped.items %}
+    <h3>{{ student.first_name }} {{ student.last_name }}</h3>
+    <ul>
+      {% for subject in subjects %}
+        <li>{{ subject.course.name }} (Professor: {{ subject.course.professor }} | Credits: {{ subject.course.number_of_credits }})</li>
+      {% empty %}
+        <li>No subjects chosen yet.</li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+{% endblock %}
