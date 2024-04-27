@@ -28,8 +28,8 @@
                 {% if request.user.is_authenticated and request.user.professor %}
                     <li><a href="{% url 'create_assignment' %}">Add Assignment</a></li>
                 {% endif %}
-                {% if request.user.is_authenticated and not request.user.is_superuser %}
-                    <li><a href="{% url 'assignments' %}">Assignment</a></li>
+                {% if request.user.is_authenticated and not request.user.is_superuser  %}
+                    <li><a href="{% url 'assignments' %}"> Assignment</a></li>
                 {% endif %}
                 <!-- Add more navigation links as needed -->
             </ul>

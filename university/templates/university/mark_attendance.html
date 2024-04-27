@@ -1,3 +1,4 @@
+{% include 'university/header.html' %}
 {% for course_with_students in courses_with_students %}
     <h2>{{ course_with_students.course.name }}</h2>
     <form method="post">
