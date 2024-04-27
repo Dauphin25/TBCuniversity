@@ -20,6 +20,12 @@
                     <li><a href="{% url 'professor_subjects' %}">My Courses and students</a></li>
                 {% endif %}
                 {% if request.user.is_authenticated and request.user.professor %}
+                    {% for course in request.user.professor.courses.all %}
+                        <li><a href="{% url 'mark_attendance' course.id %}">Mark Attendance for {{ course.name }}</a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+                {% if request.user.is_authenticated and request.user.professor %}
                     <li><a href="{% url 'create_assignment' %}">Add Assignment</a></li>
                 {% endif %}
                 {% if request.user.is_authenticated and not request.user.is_superuser %}

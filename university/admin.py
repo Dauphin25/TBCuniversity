@@ -5,6 +5,7 @@ from university.models.course import Course
 from university.models.student import Student
 from university.models.Taking_Subjects import TakingSubjects
 from university.models.assignment import Assignment
+from university.models.attendance import Attendance
 
 
 # Register your models here.
@@ -62,6 +63,16 @@ class TakingSubjectsAdmin(admin.ModelAdmin):
 class AssignmentAdmin(admin.ModelAdmin):
     list_display = ('title', 'description', 'course', 'deadline', 'created_at', 'updated_at')
     search_fields = ('title', 'description', 'course', 'deadline')
+    list_filter = ('created_at', 'updated_at')
+    date_hierarchy = 'created_at'
+    ordering = ('-created_at',)
+    readonly_fields = ('created_at', 'updated_at')
+
+
+@admin.register(Attendance)
+class AttendanceAdmin(admin.ModelAdmin):
+    list_display = ('student', 'course', 'date', 'is_present', 'created_at', 'updated_at')
+    search_fields = ('student', 'course', 'date', 'is_present')
     list_filter = ('created_at', 'updated_at')
     date_hierarchy = 'created_at'
     ordering = ('-created_at',)

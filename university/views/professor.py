@@ -1,7 +1,11 @@
-from django.shortcuts import render
-from university.models import Professor
+from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
+
+from university.models import Professor, Student
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+
+from university.models.attendance import Attendance
 from university.models.course import Course
 from university.models.Taking_Subjects import TakingSubjects
 
@@ -43,3 +47,20 @@ def professors(request):
 
     return render(request, 'university/professors.html', {'professors': professors})
 
+
+@login_required
+def mark_attendance(request, subject_id):
+    subject = get_object_or_404(Course, id=subject_id)
+    students_taking_course = TakingSubjects.objects.filter(course=subject)
+    courses_with_students = [{'course': subject, 'students': students_taking_course}]
+
+    if request.method == 'POST':
+        date = request.POST['date']
+        for course_with_students in courses_with_students:
+            for student in course_with_students['students']:
+                attended = request.POST.get(f'attended_{student.student.id}', False)
+                Attendance.objects.create(student=student.student, course=course_with_students['course'], date=date, is_present=attended)
+
+        return redirect('home')  # Redirect to a suitable view
+
+    return render(request, 'university/mark_attendance.html', {'courses_with_students': courses_with_students})

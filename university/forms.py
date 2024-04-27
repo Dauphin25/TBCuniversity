@@ -22,7 +22,6 @@ class AssignmentForm(forms.ModelForm):
         fields = ['course', 'title', 'description', 'deadline']
 
 
-
 class TakingSubjectsForm(forms.ModelForm):
     class Meta:
         model = TakingSubjects
