@@ -1,14 +1,41 @@
-
 {% block content %}
     {% include 'university/header.html' %}
     {% if assignments %}
-        <p>Assignments are available:</p>
+        <h2>Available Assignments:</h2>
         <ul>
             {% for assignment in assignments %}
+                <li>
+                    <strong>Title:</strong> {{ assignment.title }} <br>
+                    <strong>Description:</strong> {{ assignment.description }} <br>
+                    <strong>Course:</strong> {{ assignment.course }} <br>
+                    <strong>Points:</strong> {{ assignment.points }} <br>
+                    <strong>Professor:</strong> {{ assignment.course.professor }} <br>
+                    <strong>Deadline:</strong> {{ assignment.deadline }} <br>
+                </li>
+                {% if not assignment.is_completed %}
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="assignment_id" value="{{ assignment.id }}">
+                        <label for="submission">Submit your solution:</label>
+                        <input type="file" name="submission" id="submission">
+                        <button type="submit">Submit</button>
+                    </form>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No available assignments found.</p>
+    {% endif %}
+
+    {% if completed_assignments %}
+        <h2>Completed Assignments:</h2>
+        <ul>
+            {% for assignment in completed_assignments %}
                 <li>{{ assignment.title }} - {{ assignment.description }} - {{ assignment.deadline }}</li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>No assignments found.</p>
+        <p>No completed assignments found.</p>
     {% endif %}
 {% endblock %}
+

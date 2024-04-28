@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from university.models.assignment import Assignment
-from university.forms import AssignmentForm
+from university.forms import AssignmentForm, AssignmentSubmissionForm
 from django.contrib.auth.decorators import login_required
 from university.models.Taking_Subjects import TakingSubjects
 
@@ -27,11 +27,29 @@ def assignments(request):
         # Get the courses the student is enrolled in
         enrolled_courses = TakingSubjects.objects.filter(student=student).values_list('course', flat=True)
 
-        # Filter assignments based on the enrolled courses
-        assignments = Assignment.objects.filter(course__in=enrolled_courses)
+        # Filter available assignments based on the enrolled courses
+        assignments = Assignment.objects.filter(course__in=enrolled_courses, is_completed=False)
 
-        return render(request, 'university/assignment.html', {'assignments': assignments})
+        # Filter completed assignments based on the enrolled courses
+        completed_assignments = Assignment.objects.filter(course__in=enrolled_courses, is_completed=True)
+
+        if request.method == 'POST':
+            form = AssignmentSubmissionForm(request.POST, request.FILES)
+            if form.is_valid():
+                assignment_id = form.cleaned_data['assignment_id']
+                submission_file = form.cleaned_data['submission']
+
+                # Save the submission to the database and mark the assignment as completed
+                assignment = Assignment.objects.get(id=assignment_id)
+                assignment.submission = submission_file
+                assignment.is_completed = True
+                assignment.save()
+
+                # Redirect to prevent form resubmission
+                return redirect('assignments')
+        else:
+            form = AssignmentSubmissionForm()
+
+        return render(request, 'university/assignment.html', {'assignments': assignments, 'completed_assignments': completed_assignments, 'form': form})
     else:
-        # Handle the case when the user is not a student
-        # Redirect to another page or display an error message
-        return redirect('university:dashboard')  # Redirect to dashboard or another suitable page
+        return redirect('home')

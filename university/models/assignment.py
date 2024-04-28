@@ -10,6 +10,7 @@ class Assignment(models.Model):
                                verbose_name=_('Course'), blank=True, null=True)
     deadline = models.DateTimeField(verbose_name=_('Deadline'))
     points = models.PositiveIntegerField(verbose_name=_('Points'), default=0)
+    is_completed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Created At'))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Updated At'))
 

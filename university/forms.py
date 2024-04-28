@@ -19,7 +19,7 @@ class AssignmentForm(forms.ModelForm):
 
     class Meta:
         model = Assignment
-        fields = ['course', 'title', 'description', 'deadline']
+        fields = ['course', 'title', 'description', 'deadline', 'points']
 
 
 class TakingSubjectsForm(forms.ModelForm):
@@ -34,3 +34,8 @@ class TakingSubjectsForm(forms.ModelForm):
         widgets = {
             'semester': forms.NumberInput(attrs={'min': 1, 'max': 8})
         }
+
+
+class AssignmentSubmissionForm(forms.Form):
+    assignment_id = forms.IntegerField(widget=forms.HiddenInput())
+    submission = forms.FileField(label='Submit your solution')
