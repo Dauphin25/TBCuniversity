@@ -1,4 +1,15 @@
 {% include 'university/header.html' %}
+
+{% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for course in request.user.professor.courses.all %}
+    <li><a href="{% url 'mark_attendance' course.id %}">Mark Attendance for {{ course.name }}</a></li>
+{% endfor %}
+
 {% for course_with_students in courses_with_students %}
     <h2>{{ course_with_students.course.name }}</h2>
     <form method="post">
@@ -25,4 +36,70 @@
         </table>
         <button type="submit">Mark Attendance</button>
     </form>
+
+    <div class="container">
+        <h3>Current Attendance Data</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Date</th>
+                    <th>Attendance</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attendance in all_attendance %}
+                    <tr>
+                        <td>{{ attendance.student.first_name }} {{ attendance.student.last_name }}</td>
+                        <td>{{ attendance.date }}</td>
+                        <td>{{ attendance.is_present }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endfor %}
+
+<style>
+
+h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+tr:hover {
+    background-color: #e9e9e9;
+}
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+.alert-error {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+</style>

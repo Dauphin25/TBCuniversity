@@ -1,7 +1,7 @@
 from django.urls import path
 from university.views.home_page import home
 from university.views.login import login_view
-from university.views.professor import professors, professor_subjects, mark_attendance
+from university.views.professor import professors, professor_subjects, mark_attendance, mark_attendance_page
 from university.views.faculties import faculties
 from university.views.subjects import subjects
 from university.views.subjects import taking_subjects
@@ -23,4 +23,5 @@ urlpatterns = [
     path('create_assignment/', create_assignment, name='create_assignment'),
     path('assignments/', assignments, name='assignments'),
     path('mark_attendance/<int:subject_id>/', mark_attendance, name='mark_attendance'),
+    path('mark_attendance/', mark_attendance_page, name='mark_attendance_page')
 ]
